@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('annoy-0.2.5.jar'))
