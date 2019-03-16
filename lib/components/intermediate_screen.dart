@@ -22,11 +22,22 @@ class _IntermediateScreenState extends State<IntermediateScreen> {
                           elevation: 0,     
                         );
 
-  void handleSearch() {
-    performSearch(widget.image);
+  void handleSearch() async {
+    List<dynamic> similarImageIds = await performSearch(widget.image);
+    List<Map> similarImageDetails = await extractImageDetails(similarImageIds);
+    Map seperatedCategories = await seperateCategories(similarImageDetails);
+
+    print('Predicted Class: ${seperatedCategories["predictedLabel"]}');
+    print('Similar of same class: ${seperatedCategories["sameClassSimilar"]}');
+    print('Similar of different class: ${seperatedCategories["differentClassSimilar"]}');
+    // print("Similar Image details: $similarImageDetails");
     // print(getappl)
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) => ResultScreen(queryImage: widget.image,)
+      builder: (context) => ResultScreen(queryImage: widget.image, 
+                                        predictedLabel: seperatedCategories['predictedLabel'], 
+                                        sameClassSimilar: seperatedCategories['sameClassSimilar'],
+                                        differentClassSimilar: seperatedCategories['differentClassSimilar'],
+                                        showResults: true, flickHalfBoundValue: 0.25, flickUpperBoundValue: 0.75,)
     ));
   }
 

@@ -39,7 +39,7 @@ public class MainActivity extends FlutterActivity {
   }
 
   private List<Integer> getSimilarToVector(float[] itemVector) {
-    List<Integer> retrievedResults = index.getNearest(itemVector, 10);
+    List<Integer> retrievedResults = index.getNearest(itemVector, 50);
     return retrievedResults;
   }
 
