@@ -17,7 +17,7 @@ class _PickerScreenState extends State<PickerScreen> {
   // File _image;
 
   void _pickImage({ImageSource source}) async {
-    var image = await ImagePicker.pickImage(source: source);
+    var image = await ImagePicker.pickImage(source: source, maxWidth: 480);
     // setState(() {
     //   this._image = image;
     // });

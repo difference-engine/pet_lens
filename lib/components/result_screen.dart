@@ -160,11 +160,11 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
       child:Column(
         children: [
           _getBottomSheetHeader(),
-          Container(
-            child: Text('This is some info about basset hound', style: TextStyle(decoration: TextDecoration.none, color: Color(0xff2a2a2a), fontWeight: FontWeight.normal, fontFamily: 'Roboto', fontSize: 16)),
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(14, 14, 14, 32),
-          ),
+          // Container(
+          //   child: Text('This is some info about basset hound', style: TextStyle(decoration: TextDecoration.none, color: Color(0xff2a2a2a), fontWeight: FontWeight.normal, fontFamily: 'Roboto', fontSize: 16)),
+          //   width: MediaQuery.of(context).size.width,
+          //   padding: EdgeInsets.fromLTRB(14, 14, 14, 32),
+          // ),
           (widget.showResults ? _getResultsSection(): Container(width: 0, height: 0)),
         ]
       ), 

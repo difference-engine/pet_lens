@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:image_crop/image_crop.dart';
 import 'dart:io';
 
 import './result_screen.dart';
@@ -21,9 +22,28 @@ class _IntermediateScreenState extends State<IntermediateScreen> {
                           backgroundColor: Color(0x00000000),
                           elevation: 0,     
                         );
+  final cropKey = GlobalKey<CropState>();
+  
+  Future<File> getCroppedImage() async {
+    CropState crop = cropKey.currentState;
+    File sampledFile = await ImageCrop.sampleImage(
+      file: widget.image,
+      preferredWidth: (480 / crop.scale).round(),
+      preferredHeight: (640 / crop.scale).round(),
+    );
+
+    File croppedFile = await ImageCrop.cropImage(
+      file: sampledFile,
+      area: crop.area,
+    );
+
+    return croppedFile;
+  }
 
   void handleSearch() async {
-    List<dynamic> similarImageIds = await performSearch(widget.image);
+    // File _croppedImage = await getCroppedImage();
+    File _croppedImage = widget.image;
+    List<dynamic> similarImageIds = await performSearch(_croppedImage);
     List<Map> similarImageDetails = await extractImageDetails(similarImageIds);
     Map seperatedCategories = await seperateCategories(similarImageDetails);
 
@@ -33,7 +53,7 @@ class _IntermediateScreenState extends State<IntermediateScreen> {
     // print("Similar Image details: $similarImageDetails");
     // print(getappl)
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) => ResultScreen(queryImage: widget.image, 
+      builder: (context) => ResultScreen(queryImage: _croppedImage, 
                                         predictedLabel: seperatedCategories['predictedLabel'], 
                                         sameClassSimilar: seperatedCategories['sameClassSimilar'],
                                         differentClassSimilar: seperatedCategories['differentClassSimilar'],
@@ -57,6 +77,11 @@ class _IntermediateScreenState extends State<IntermediateScreen> {
                 heroTag: 'queryImage',
                 imageProvider: FileImage(widget.image),
               ),
+              // child: Crop(
+              //   key: cropKey,
+              //   image: FileImage(widget.image),
+              //   // aspectRatio: 1.0,
+              // ),
             ),
             Positioned(
               top: 0,

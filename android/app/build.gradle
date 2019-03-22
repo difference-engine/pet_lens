@@ -42,9 +42,9 @@ android {
 
         // Super important for successful build install. Tflite produces .so files for multiple architectures, even those for which flutter does not.
         // Below filter limits this. For more info, refer -> https://medium.com/flutterpub/flutter-app-couldnt-find-libflutter-so-c95ad81cbccd
-        ndk {
-            abiFilters 'armeabi-v7a'
-        }
+        // ndk {
+        //     abiFilters 'armeabi-v7a'
+        // }
     }
 
     buildTypes {
